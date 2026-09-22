@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Ficha de Personagem — Limbus RPG</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800&family=Oswald:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0a0a0a;--panel:#151515;--gold:#c9a227;--gold2:#f0cf58;--red:#8b0000;--text:#e8e6e3;--line:#544719}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Oswald,Arial,sans-serif;background-image:radial-gradient(#fff1 1px,transparent 1px);background-size:5px 5px}
+h1,h2,h3{font-family:Cinzel,serif}.app{max-width:1450px;margin:auto;padding:16px}
+header,.panel{background:linear-gradient(145deg,#1b1b1b,#101010);border:1px solid var(--line);box-shadow:0 0 18px #000,inset 0 0 18px #000;border-radius:5px}
+header{padding:18px;margin-bottom:14px}.title{font-family:Cinzel;font-size:clamp(22px,4vw,38px);letter-spacing:3px;color:var(--gold2);margin:0 0 15px}
+.grid{display:grid;gap:14px}.header-grid{grid-template-columns:2fr 2fr 100px 1fr}.two{grid-template-columns:repeat(2,minmax(0,1fr))}.three{grid-template-columns:repeat(3,minmax(0,1fr))}.four{grid-template-columns:repeat(4,minmax(0,1fr))}
+.panel{padding:15px}.panel h2{font-size:17px;margin:0 0 12px;color:var(--gold2);letter-spacing:1px;border-bottom:1px solid #5a4a17;padding-bottom:7px}
+label{display:block;color:#bdb9ae;font-size:12px;text-transform:uppercase;letter-spacing:1px;margin-bottom:5px}
+input,select,textarea{width:100%;background:#090909;color:var(--text);border:1px solid #49401f;border-radius:3px;padding:8px;outline:none}input:focus,select:focus,textarea:focus{border-color:var(--gold)}textarea{resize:vertical;min-height:100px}
+.bar{height:23px;background:#080808;border:1px solid #4c421c;position:relative;overflow:hidden;border-radius:3px}.fill{height:100%;transition:.25s;width:0;background:linear-gradient(90deg,#580000,#c31616)}.xpfill{background:linear-gradient(90deg,#6d4d00,#e2bd31)}.bartext{position:absolute;inset:0;display:grid;place-items:center;font:12px monospace;text-shadow:0 1px #000}
+.row{display:flex;gap:6px;align-items:center;flex-wrap:wrap}.actions{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}
+.btn{background:#171717;color:#ddd;border:1px solid #5b4a18;padding:6px 9px;border-radius:3px;transition:.15s;box-shadow:inset 0 0 8px #000}.btn:hover{border-color:var(--gold);color:#fff;transform:translateY(-1px)}.btn.gold{background:#332900;color:#f6d75d}.btn.red{background:#320606;border-color:#720d0d}.btn.big{padding:9px 14px;font-family:Cinzel,serif}
+.stat{background:#101010;border:1px solid #39311a;padding:10px;border-radius:3px}.stat-name{color:var(--gold2);font-family:Cinzel;font-size:13px}.stat-value{font:bold 25px monospace;margin:4px 0}.stat-mod{font:13px monospace;color:#aaa}
+.res-table{width:100%;border-collapse:collapse;font-family:monospace}.res-table th,.res-table td{border:1px solid #3e3519;padding:7px;text-align:center}.res-table th{color:var(--gold2)}
+.res{width:42px;height:32px;border:1px solid #555;background:#333;color:white;border-radius:3px;font-weight:bold}.res.F{background:#700b0b}.res.N{background:#444}.res.R{background:#244d78}.res.I{background:#866719}
+.skill,.ego-card{border:1px solid #443919;background:#101010;padding:12px;margin-bottom:10px;border-radius:3px}.skill h3,.ego-card h3{margin:0 0 9px;color:var(--gold2)}
+.dice{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px;min-height:30px}.die{width:32px;height:32px;display:grid;place-items:center;border:1px solid #555;background:#292929;font:bold 14px monospace;animation:pop .22s ease}.die.four{background:#806300;color:#fff2a3;border-color:#e5c544;box-shadow:0 0 12px #c9a227}
+@keyframes pop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+.spbar{background:#191919}.spfill{height:100%;position:absolute;top:0}.spfill.pos{background:#315e3e}.spfill.neg{background:#651010}.spfill.neutral{background:#444}.spzero{position:absolute;left:50%;top:0;bottom:0;width:2px;background:#ddd8}
+.warning{color:#ff6b6b;font-weight:bold}.success{color:#9fdda9}.gold{color:var(--gold2)}.muted{color:#999}.small{font-size:12px}.mono{font-family:monospace}
+.modal{position:fixed;inset:0;background:#000b;display:none;place-items:center;padding:18px;z-index:20}.modal.open{display:grid}.modalbox{width:min(620px,100%);background:#151515;border:1px solid var(--gold);box-shadow:0 0 35px #000;padding:18px}
+.card{padding:22px;border:1px solid var(--gold);background:linear-gradient(145deg,#211d0e,#111);animation:cardin .4s ease;box-shadow:0 0 25px #c9a22755}.card.r000{box-shadow:0 0 45px #c9a227aa}@keyframes cardin{from{transform:scale(.75);opacity:0}to{transform:scale(1);opacity:1}}
+footer{padding:15px;text-align:center;color:#666;font:11px monospace}
+@media(max-width:900px){.header-grid,.four{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:650px){.two,.three,.header-grid,.four{grid-template-columns:1fr}.app{padding:8px}.panel{padding:11px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header>
+<div class="title">LIMBUS // CHARACTER FILE</div>
+<div class="grid header-grid">
+<div><label>Nome do Pecador</label><input id="name" placeholder="Nome"></div>
+<div><label>Identidade Equipada</label><input id="identity" placeholder="Identidade"></div>
+<div><label>Nível</label><input id="level" type="number" min="1" max="60" value="1"></div>
+<div><label>Experiência</label><div class="bar"><div id="xpP" class="fill xpfill"></div><div id="xpText" class="bartext">0 / 100</div></div><div class="actions"><button class="btn" onclick="xp(-10)">−10 XP</button><button class="btn" onclick="xp(10)">+10 XP</button><input id="xp" class="mono" type="number" value="0" style="width:90px"></div></div>
+</div>
+<div class="actions"><button class="btn gold" onclick="saveState()">SALVAR</button><button class="btn" onclick="loadState()">CARREGAR</button><button class="btn" onclick="exportJSON()">EXPORTAR JSON</button><button class="btn red" onclick="resetAll()">RESETAR</button></div>
+</header>
+
+<main class="grid two">
+<section class="panel"><h2>RECURSOS PRINCIPAIS</h2>
+<label>HP</label><div class="bar"><div id="hpFill" class="fill"></div><div id="hpText" class="bartext"></div></div>
+<div class="actions"><button class="btn" onclick="hp(-5)">−5</button><button class="btn" onclick="hp(-1)">−1</button><button class="btn" onclick="hp(1)">+1</button><button class="btn" onclick="hp(5)">+5</button><button class="btn red" onclick="setHP(0)">RESET</button><input id="hpMax" type="number" min="1" value="100" style="width:90px"></div>
+<hr style="border-color:#292510">
+<label>SP <span id="spModifier" class="gold"></span></label><div class="bar spbar"><div id="spFill" class="spfill"></div><div class="spzero"></div><div id="spText" class="bartext"></div></div>
+<div class="actions"><button class="btn" onclick="sp(-5)">−5</button><button class="btn" onclick="sp(-1)">−1</button><button class="btn" onclick="sp(1)">+1</button><button class="btn" onclick="sp(5)">+5</button><button class="btn red" onclick="setSP(0)">ZERO</button></div>
+</section>
+
+<section class="panel"><h2>ATRIBUTOS</h2><div id="attrs" class="grid four"></div></section>
+
+<section class="panel"><h2>RESISTÊNCIAS</h2><table class="res-table"><thead><tr><th>Tipo</th><th>Resistência</th></tr></thead><tbody id="resBody"></tbody></table><p class="small muted">Clique: F → N → R → I.</p></section>
+
+<section class="panel"><h2>INVENTÁRIO / NOTAS</h2><textarea id="inventory" placeholder="Itens, observações, história, anotações..."></textarea></section>
+
+<section class="panel" style="grid-column:1/-1"><h2>SKILLS</h2><div id="skills"></div></section>
+
+<section class="panel"><h2>E.G.O.</h2><div class="ego-card">
+<label>Nome</label><input id="egoName"><div class="grid three" style="margin-top:8px"><div><label>Sin</label><select id="egoSin"></select></div><div><label>Custo de SP</label><input id="egoCost" type="number" value="10"></div><div><label>Recurso</label><input id="egoResource"></div></div>
+<label style="margin-top:8px">Descrição</label><textarea id="egoDesc" style="min-height:80px"></textarea><div class="actions"><button class="btn gold big" onclick="activateEgo()">ATIVAR E.G.O.</button></div><div id="egoResult" class="small" style="margin-top:9px"></div>
+</div></section>
+
+<section class="panel"><h2>CAMPANHA</h2><div class="row" style="justify-content:space-between"><div><label>Lunacy</label><div class="mono" id="lunacy" style="font-size:24px">0</div></div><div class="actions"><button class="btn" onclick="lunacy(-10)">−10</button><button class="btn" onclick="lunacy(10)">+10</button></div></div>
+<hr style="border-color:#292510"><h3 class="gold">FRAGMENTOS</h3><div id="fragments" class="grid two"></div><div class="actions"><button class="btn gold big" onclick="extract()">EXTRACTION — 130 LUNACY</button><button class="btn" onclick="openDispense()">DISPENSE</button></div><div id="extractResult" style="margin-top:12px"></div></section>
+</main><footer>FICHA NÃO OFICIAL PARA RPG • Estado salvo automaticamente.</footer>
+</div>
+
+<div id="modal" class="modal"><div class="modalbox"><div class="row" style="justify-content:space-between"><h2 class="gold" style="margin:0">DISPENSE</h2><button class="btn" onclick="closeModal()">X</button></div><div class="grid two" style="margin-top:15px"><div><label>Pecador</label><select id="dispSinner"></select></div><div><label>Tipo</label><select id="dispType"><option value="00">Identidade 00 — 150</option><option value="000">Identidade 000 / E.G.O. — 400</option></select></div></div><div class="actions"><button class="btn gold" onclick="dispense()">CONFIRMAR</button></div><div id="dispResult" class="small" style="margin-top:10px"></div></div></div>
+
+<script>
+const sinners=["Yi Sang","Faust","Don Quixote","Ryoshu","Meursault","Hong Lu","Heathcliff","Ishmael","Rodion","Sinclair","Outis","Gregor"];
+const sins=["Nenhum","Ira","Luxúria","Preguiça","Gula","Tristeza","Gloom","Orgulho","Inveja"],damages=["Nenhum","Slash","Pierce","Blunt"];
+const D={name:"",identity:"",level:1,xp:0,hp:100,hpMax:100,sp:0,attrs:{Vigor:10,Agilidade:10,Intellect:10,Ego:10},resistances:{Slash:"N",Pierce:"N",Blunt:"N",Ira:"N",Luxúria:"N",Preguiça:"N",Gula:"N",Tristeza:"N",Gloom:"N",Orgulho:"N",Inveja:"N"},skills:[{name:"Skill 1",sin:"Ira",damage:"Slash",base:4,coins:2,notes:""},{name:"Skill 2",sin:"Nenhum",damage:"Pierce",base:5,coins:2,notes:""},{name:"Skill 3",sin:"Orgulho",damage:"Blunt",base:6,coins:3,notes:""},{name:"Defense",sin:"Nenhum",damage:"Blunt",base:3,coins:1,notes:""}],ego:{name:"",sin:"Ira",cost:10,resource:"",desc:""},lunacy:130,fragments:{},owned:{},inventory:""};
+let state=JSON.parse(JSON.stringify(D));
+const $=id=>document.getElementById(id),v=id=>$(id).value,clamp=(n,a,b)=>Math.max(a,Math.min(b,n));
+function saveState(){state.name=v("name");state.identity=v("identity");state.level=clamp(+v("level")||1,1,60);state.xp=clamp(+v("xp")||0,0,100);state.hpMax=Math.max(1,+v("hpMax")||1);state.inventory=v("inventory");state.ego={name:v("egoName"),sin:v("egoSin"),cost:+v("egoCost")||0,resource:v("egoResource"),desc:v("egoDesc")};localStorage.setItem("limbusRPG",JSON.stringify(state));render()}
+function loadState(){let s=localStorage.getItem("limbusRPG");if(!s)return;try{let x=JSON.parse(s);state=Object.assign(JSON.parse(JSON.stringify(D)),x);state.attrs=Object.assign(D.attrs,x.attrs||{});state.resistances=Object.assign(D.resistances,x.resistances||{});render()}catch(e){alert("Erro ao carregar.")}}
+function changed(){clearTimeout(window.t);window.t=setTimeout(saveState,300)}
+function xp(n){state.xp=clamp(state.xp+n,0,100);render()}function hp(n){state.hp=clamp(state.hp+n,0,state.hpMax);render()}function setHP(n){state.hp=n;render()}function sp(n){state.sp=clamp(state.sp+n,-45,45);render()}function setSP(n){state.sp=n;render()}function lunacy(n){state.lunacy=Math.max(0,state.lunacy+n);render()}
+function sm(){if(state.sp>=25)return 3;if(state.sp>=10)return 2;if(state.sp>=1)return 1;if(state.sp<=-10)return -2;if(state.sp<=-1)return -1;return 0}
+function st(){if(state.sp>=25)return"+3 d4";if(state.sp>=10)return"+2 d4";if(state.sp>=1)return"+1 d4";if(state.sp<=-25)return"CORROSÃO";if(state.sp<=-10)return"-2 d4";if(state.sp<=-1)return"-1 d4 mínimo 1";return"Nenhum"}
+function render(){
+ $("name").value=state.name;$("identity").value=state.identity;$("level").value=state.level;$("xp").value=state.xp;$("xpP").style.width=state.xp+"%";$("xpText").textContent=state.xp+" / 100";$("hpMax").value=state.hpMax;$("hpFill").style.width=state.hp/state.hpMax*100+"%";$("hpText").textContent=state.hp+" / "+state.hpMax;
+ let f=$("spFill"),p=Math.abs(state.sp)/45*50;f.className="spfill "+(state.sp>0?"pos":state.sp<0?"neg":"neutral");f.style.width=p+"%";f.style.left=state.sp>=0?"50%":50-p+"%";$("spText").textContent=state.sp+" / 45";$("spModifier").textContent=st();attrs();res();skills();ego();campaign();$("inventory").value=state.inventory
+}
+function attrs(){let b=$("attrs");b.innerHTML="";for(let[k,x]of Object.entries(state.attrs)){let m=Math.floor((x-10)/2);b.innerHTML+=`<div class="stat"><div class="stat-name">${k}</div><div class="stat-value">${x}</div><div class="stat-mod">MOD ${m>=0?"+":""}${m}</div><div class="actions"><button class="btn" onclick="attr('${k}',-1)">−</button><button class="btn" onclick="attr('${k}',1)">+</button></div></div>`}}
+function attr(k,n){state.attrs[k]=clamp(state.attrs[k]+n,1,20);render()}
+function res(){let b=$("resBody");b.innerHTML="";for(let k of Object.keys(state.resistances))b.innerHTML+=`<tr><td>${k}</td><td><button class="res ${state.resistances[k]}" onclick="cycle('${k}')">${state.resistances[k]}</button></td></tr>`}
+function cycle(k){let a=["F","N","R","I"];state.resistances[k]=a[(a.indexOf(state.resistances[k])+1)%4];render()}
+function opts(a,s){return a.map(x=>`<option ${x==s?"selected":""}>${x}</option>`).join("")}
+function skills(){let b=$("skills");b.innerHTML="";state.skills.forEach((s,i)=>b.innerHTML+=`<div class="skill"><h3>${i==3?"DEFESA":"SKILL "+(i+1)}</h3><div class="grid four"><div><label>Nome</label><input id="sn${i}" value="${s.name}"></div><div><label>Sin</label><select id="ss${i}">${opts(sins,s.sin)}</select></div><div><label>Dano</label><select id="sd${i}">${opts(damages,s.damage)}</select></div><div><label>Base / Coins</label><div class="row"><input id="sb${i}" type="number" value="${s.base}" style="width:70px"><input id="sc${i}" type="number" min="1" max="5" value="${s.coins}" style="width:70px"></div></div></div><label style="margin-top:8px">Notas</label><input id="snote${i}" value="${s.notes}"><div class="actions"><button class="btn gold big" onclick="rollSkill(${i})">ROLAR</button></div><div id="roll${i}" class="dice"></div><div id="rollText${i}" class="small muted"></div></div>`)}
+function sync(i){let s=state.skills[i];s.name=v("sn"+i);s.sin=v("ss"+i);s.damage=v("sd"+i);s.base=+v("sb"+i)||0;s.coins=clamp(+v("sc"+i)||1,1,5);s.notes=v("snote"+i)}
+async function rollSkill(i){sync(i);let s=state.skills[i],n=Math.max(1,s.coins+sm()),b=$("roll"+i);b.innerHTML="";let a=[];for(let j=0;j<n;j++){await new Promise(r=>setTimeout(r,100));let d=1+Math.floor(Math.random()*4);a.push(d);let e=document.createElement("div");e.className="die"+(d==4?" four":"");e.textContent=d;b.appendChild(e)}let q=a.filter(x=>x==4).length;$("rollText"+i).innerHTML=`Valores: <b>${a.join(", ")}</b> • 4s: <b>${q}</b> • Poder final: <b class="gold">${s.base+q}</b>`;saveState()}
+function ego(){$("egoName").value=state.ego.name;$("egoSin").innerHTML=opts(sins,state.ego.sin);$("egoCost").value=state.ego.cost;$("egoResource").value=state.ego.resource;$("egoDesc").value=state.ego.desc}
+function activateEgo(){saveState();let o=$("egoResult");if(state.sp<state.ego.cost){o.innerHTML='<span class="warning">SP insuficiente.</span>';return}state.sp-=state.ego.cost;if(state.sp<=-25){let d=1+Math.floor(Math.random()*100);o.innerHTML=`<span class="warning">CORROSÃO! d100 = ${d}</span> ${d<=30?'<strong class="warning">CORROSÃO — o E.G.O. toma o controle!</strong>':'<span class="gold">O E.G.O. permanece sob controle.</span>'}`}else o.innerHTML='<span class="gold">E.G.O. ativado.</span>';render();saveState()}
+function campaign(){$("lunacy").textContent=state.lunacy;let b=$("fragments");b.innerHTML="";sinners.forEach(s=>b.innerHTML+=`<div class="stat"><div class="stat-name">${s}</div><div class="stat-value">${state.fragments[s]||0}</div></div>`);$("dispSinner").innerHTML=opts(sinners,sinners[0])}
+function extract(){if(state.lunacy<130)return alert("Lunacy insuficiente.");state.lunacy-=130;let d=1+Math.floor(Math.random()*100),r=d<=84?"0":d<=97?"00":"000",s=sinners[Math.floor(Math.random()*sinners.length)],key=s+"|"+r,dup=state.owned[key],out=`<div class="card ${r=="000"?"r000":""}"><div class="small muted">d100 = ${d}</div><h2>${r==="000"?"000":"Identity "+r}</h2><h3 class="gold">${s}</h3>`;if(dup){let q=r==="00"?15:50;state.fragments[s]=(state.fragments[s]||0)+q;out+=`<p>Duplicata convertido em <b>${q} fragmentos</b>.</p>`}else{state.owned[key]=true;out+='<p class="success">Novo item obtido.</p>'}$("extractResult").innerHTML=out+"</div>";render();saveState()}
+function openDispense(){$("modal").classList.add("open")}function closeModal(){$("modal").classList.remove("open")}
+function dispense(){let s=v("dispSinner"),r=v("dispType"),q=r==="00"?150:400;if((state.fragments[s]||0)<q)return $("dispResult").innerHTML='<span class="warning">Fragmentos insuficientes.</span>';state.fragments[s]-=q;state.owned[s+"|"+r]=true;$("dispResult").innerHTML=`<span class="success">Obtido: ${s} — ${r}.</span>`;render();saveState()}
+function exportJSON(){saveState();let b=new Blob([JSON.stringify(state,null,2)],{type:"application/json"}),u=URL.createObjectURL(b),a=document.createElement("a");a.href=u;a.download="ficha-limbus-rpg.json";a.click();URL.revokeObjectURL(u)}
+function resetAll(){if(confirm("Resetar toda a ficha?")&&confirm("CONFIRMAÇÃO FINAL: apagar todos os dados?")){localStorage.removeItem("limbusRPG");state=JSON.parse(JSON.stringify(D));render()}}
+document.addEventListener("input",()=>{state.inventory=v("inventory");changed()});$("level").addEventListener("change",()=>{state.level=clamp(+v("level")||1,1,60);changed()});$("hpMax").addEventListener("change",()=>{state.hpMax=Math.max(1,+v("hpMax")||1);state.hp=Math.min(state.hp,state.hpMax);render();changed()});$("xp").addEventListener("change",()=>{state.xp=clamp(+v("xp")||0,0,100);render();changed()});render();if(localStorage.getItem("limbusRPG"))loadState();
+</script>
+</body>
+</html>
